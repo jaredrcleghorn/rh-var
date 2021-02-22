@@ -11,3 +11,6 @@ insert_final_newline = true
 [config.json]
 indent_style = tab
 indent_size = 2
+
+[test.yml]
+indent_size = 2
