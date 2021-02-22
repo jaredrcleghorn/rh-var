@@ -4,8 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+"jc.robinhood" = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+start = "python rhvar.py"
