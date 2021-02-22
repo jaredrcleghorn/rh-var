@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 import numpy as np
 import robinhood as rh
+import statistics
 import utils
 
 CONFIG_FILENAME = 'config.json'
@@ -64,4 +65,12 @@ ax2.hist(y, rwidth=0.5)
 
 plt.show()
 
+mean = statistics.mean(y)
+stdev = statistics.stdev(y, mean)
+
+print()
+print(f'{symbol} return stats:')
+print()
+print(f'mean = {round(mean * 100, 4)}%')
+print(f'standard deviation = {round(stdev * 100, 4)}%')
 print()
