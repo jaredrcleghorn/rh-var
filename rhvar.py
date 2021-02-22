@@ -73,4 +73,9 @@ print(f'{symbol} return stats:')
 print()
 print(f'mean = {round(mean * 100, 4)}%')
 print(f'standard deviation = {round(stdev * 100, 4)}%')
+
+var = 2.33 * stdev
+
+print()
+print(f'\033[1mEstimated VaR\033[0m: {round(var * 100, 4)}%')
 print()
