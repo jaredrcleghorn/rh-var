@@ -7,6 +7,7 @@ name = "pypi"
 "jc.robinhood" = "*"
 matplotlib = "*"
 numpy = "*"
+scipy = "*"
 
 [dev-packages]
 

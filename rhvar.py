@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 import numpy as np
 import robinhood as rh
+from scipy.stats import norm
 import statistics
 import utils
 
@@ -61,9 +62,7 @@ ax2.set_title(f'{symbol} Return Frequency')
 ax2.set_xlabel('Return')
 ax2.set_ylabel('Frequency')
 ax2.xaxis.set_major_formatter(FuncFormatter(lambda r, pos: f'{round(r * 100)}%'))
-ax2.hist(y, rwidth=0.5)
-
-plt.show()
+ax2.hist(y, density=True, rwidth=0.5)
 
 mean = statistics.mean(y)
 stdev = statistics.stdev(y, mean)
@@ -73,6 +72,12 @@ print(f'{symbol} return stats:')
 print()
 print(f'mean = {round(mean * 100, 4)}%')
 print(f'standard deviation = {round(stdev * 100, 4)}%')
+
+x = np.linspace(*ax2.get_xlim(), 100)
+
+ax2.plot(x, norm.pdf(x, mean, stdev))
+
+plt.show()
 
 var = 2.33 * stdev
 
