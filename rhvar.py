@@ -42,30 +42,32 @@ for i, position in enumerate(positions):
 print()
 print('Please enter one of the numbers above: ', end='')
 
-symbol = positions[int(input()) - 1]['symbol']
+position = positions[int(input()) - 1]
+symbol = position['symbol']
+quantity = position['quantity']
 historicals = robinhood.get_historicals(symbol)
 
 fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(12.8, 4.8))
 
-x = tuple(historical['begins_at'] for historical in historicals)
-y = tuple(historical['close_price'] for historical in historicals)
+dates = tuple(historical['begins_at'] for historical in historicals)
+prices = tuple(historical['close_price'] for historical in historicals)
 
 ax1.set_title(f'{symbol} Price')
 ax1.set_xlabel('Day')
 ax1.set_ylabel('Price')
 ax1.set_xticks(np.linspace(0, len(historicals) - 1, 5))
-ax1.plot(x, y)
+ax1.plot(dates, prices)
 
-y = utils.convert_to_returns(y)
+returns = utils.convert_to_returns(prices)
 
 ax2.set_title(f'{symbol} Return Frequency')
 ax2.set_xlabel('Return')
 ax2.set_ylabel('Frequency')
 ax2.xaxis.set_major_formatter(FuncFormatter(lambda r, pos: f'{round(r * 100)}%'))
-ax2.hist(y, density=True, rwidth=0.5)
+ax2.hist(returns, density=True, rwidth=0.5)
 
-mean = statistics.mean(y)
-stdev = statistics.stdev(y, mean)
+mean = statistics.mean(returns)
+stdev = statistics.stdev(returns, mean)
 
 print()
 print(f'{symbol} return stats:')
@@ -82,5 +84,5 @@ plt.show()
 var = 2.33 * stdev
 
 print()
-print(f'\033[1mEstimated VaR\033[0m: {round(var * 100, 4)}%')
+print(f"\033[1mEstimated VaR\033[0m: {round(var * 100, 4)}% or ${round(var * quantity * prices[-1], 2)}")
 print()
